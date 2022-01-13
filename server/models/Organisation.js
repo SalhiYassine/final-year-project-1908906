@@ -1,20 +1,19 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-const userSchema = mongoose.Schema(
+const OrganisationSchema = mongoose.Schema(
   {
-    name: { type: String, required: true },
+    username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    isAdmin: { type: Boolean, required: true, default: false },
   },
   { timestamps: true }
 );
 
-userSchema.methods.matchPassword = async function (reqPassword) {
+OrganisationSchema.methods.matchPassword = async function (reqPassword) {
   return await bcrypt.compare(reqPassword, this.password);
 };
 
-userSchema.pre('save', async function (next) {
+OrganisationSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
@@ -23,6 +22,6 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-const User = mongoose.model('User', userSchema);
+const Organisation = mongoose.model('Organisation', OrganisationSchema);
 
-export default User;
+export default Organisation;

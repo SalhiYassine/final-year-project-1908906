@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import colors from 'colors';
-import userRoutes from './routes/userRoutes.js';
+import organisationRoutes from './routes/organisationRoutes.js';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
   res.send('Server is running..');
 });
 
-app.use('/api/users', userRoutes);
+app.use('/api/organisation', organisationRoutes);
 
 // Error Middleware
 app.use(notFound);
