@@ -1,4 +1,4 @@
-import User from '../models/userModel.js';
+import User from '../models/ParticipantModel.js';
 import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
 
@@ -44,14 +44,14 @@ export const logout = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 export const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, surname, username, email, password } = req.body;
   const user = await User.findOne({ email });
 
   if (!user) {
-    const newUser = await User.create({ name, email, password });
+    const newUser = await User.create({ username, name, surname, email, password });
     if (newUser) {
       res.status(201);
-      res.cookie('token', generateToken(user._id), {
+      res.cookie('token', generateToken(newUser._id), {
         expires: new Date(Date.now() + 1 * 24 * 3600000), // 1 Day
         httpOnly: true, // Stops the client accessing the cookie
         secure: process.env.NODE_ENV !== 'development', // secure if in production mode
@@ -59,8 +59,8 @@ export const registerUser = asyncHandler(async (req, res) => {
       res.json({
         _id: newUser._id,
         name: newUser.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
+        email: newUser.email,
+        isAdmin: newUser.isAdmin,
       });
     } else {
       res.status(401);

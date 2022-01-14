@@ -3,6 +3,10 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import colors from 'colors';
 import organisationRoutes from './routes/organisationRoutes.js';
+import participantRoutes from './routes/participantRoute.js';
+import sessionRoutes from './routes/sessionRoutes.js';
+import courseRoutes from './routes/courseRoutes.js';
+import attendanceRoutes from './routes/attendanceRoutes.js';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -24,6 +28,10 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/organisation', organisationRoutes);
+app.use('/api/participant', participantRoutes);
+app.use('/api/course', courseRoutes);
+app.use('/api/session', sessionRoutes);
+app.use('/api/attendance', attendanceRoutes);
 
 // Error Middleware
 app.use(notFound);
