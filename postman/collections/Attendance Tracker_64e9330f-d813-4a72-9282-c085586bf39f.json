@@ -1,0 +1,706 @@
+{
+    "info": {
+        "_postman_id": "6b3e42c4-8aca-4037-8e86-aa7574ca3098",
+        "name": "Attendance Tracker",
+        "description": "Attendance Tracking API, features authentication and authorisation from participants and organisations.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Participant",
+            "item": [
+                {
+                    "name": "Participant REGISTER",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "id": "86bd62db-83d9-4149-b3ad-0a0bdde0e37d",
+                                "exec": [
+                                    "pm.environment.set('TOKEN', pm.response.json().token)"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "id": "cde836eb-34c3-42c2-b8c6-dc1a76708686",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\":\"title\",\n    \"name\": \"false\",\n    \"surname\": \"false\",\n    \"email\": \"user@user.com\",\n    \"password\": \"password123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/api/participant",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "participant"
+                            ]
+                        },
+                        "description": "Request is used to allow a participant to register\n\nBasic data is required, username, name surname, email and password."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Participant LOGIN",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "id": "9bfc325c-6467-452e-a001-9ddfc3b4ae77",
+                                "exec": [
+                                    "pm.environment.set('TOKEN', pm.response.json().token)"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "id": "5c8e9987-e456-4a3a-8232-5b6388e9e30a",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"username\":\"title\",\r\n    \"name\": \"false\",\r\n    \"surname\": \"false\",\r\n    \"email\": \"user@user.com\",\r\n    \"password\": \"password123\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/api/participant/login",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "participant",
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Participant LOGOUT",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "id": "7e0f6216-c0dc-492c-a4ec-27ce9d846065",
+                                "exec": [
+                                    ""
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "id": "11029cd1-02fc-428c-80a7-33d866f0e93b",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"username\":\"title\",\r\n    \"name\": \"false\",\r\n    \"surname\": \"false\",\r\n    \"email\": \"user@user.com\",\r\n    \"password\": \"password123\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/api/participant/logout",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "participant",
+                                "logout"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Participant PROFILE",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "id": "e9aa5097-2c31-469a-90b1-a2ed6bc160a6",
+                                "exec": [
+                                    ""
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "id": "bc9bd7ce-bfde-4689-937c-10145f4ddfb1",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"username\":\"title\",\r\n    \"name\": \"false\",\r\n    \"surname\": \"false\",\r\n    \"email\": \"user@user.com\",\r\n    \"password\": \"password123\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/api/participant/profile",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "participant",
+                                "profile"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "id": "aa0eeb08-bb83-4d5c-8354-9589fb1c747f",
+            "description": "All requests pertaining to participants"
+        },
+        {
+            "name": "Organisation",
+            "item": [
+                {
+                    "name": "Organisation REGISTER",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "id": "a9b13621-62ca-4cff-b1e5-49e636eaf9e3",
+                                "exec": [
+                                    "pm.environment.set('TOKEN', pm.response.json().token)"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "id": "14bf59bd-f488-4ae4-9035-da9fd0c53acc",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\":\"company\",\n    \"email\": \"user@company.com\",\n    \"password\": \"password123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/api/organisation",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "organisation"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Organisation LOGIN",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "id": "626d0980-873d-4cb0-84dc-548050c87f2a",
+                                "exec": [
+                                    "pm.environment.set('TOKEN', pm.response.json().token)"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "id": "5ff8dbae-ae0b-43fa-8a6e-3a064b24ab87",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"username\":\"company\",\r\n    \"email\": \"user@company.com\",\r\n    \"password\": \"password123\"\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/api/organisation/login",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "organisation",
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Organisation LOGOUT",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "id": "af205fb9-c4ec-45fa-a291-ebdf54a54f5c",
+                                "exec": [
+                                    ""
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "id": "03508f29-a255-4245-a024-3339a479c58a",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/api/organisation/logout",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "organisation",
+                                "logout"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Organisation PROFILE",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "id": "f5fb1a0f-945b-49ec-8103-2ab2b032dd8a",
+                                "exec": [
+                                    ""
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "id": "f8cb5ebe-6cc6-40fa-82b0-e0487105b062",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/api/organisation/profile",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "organisation",
+                                "profile"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "id": "8d554002-eed5-489a-b9ea-77cb8c55100b"
+        },
+        {
+            "name": "Course",
+            "item": [
+                {
+                    "name": "Course CREATE",
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "id": "468c785d-7494-4e73-b72d-7334462948cb",
+                                "exec": [
+                                    ""
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "id": "bbd2a756-b2be-4e41-96eb-338bad1c6872",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"title\",\n    \"description\": \"description\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{URL}}/api/course/",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "course",
+                                ""
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Course ADD PARTICIPANT",
+                    "id": "3af87a8c-f69e-4553-a10f-7882e0063108",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/api/course/{{course_id}}/{{participant_id}}",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "course",
+                                "{{course_id}}",
+                                "{{participant_id}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Course GET PARTICIPANT COURSES",
+                    "id": "604f193d-1187-485a-9960-231af862d679",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/api/course/participant/{{participant_id}}",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "course",
+                                "participant",
+                                "{{participant_id}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Course GET COURSE",
+                    "id": "9c7d8f6e-2ce9-4d7a-953b-68740e3ef1c4",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/api/course/{{participant_id}}",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "course",
+                                "{{participant_id}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Course GET ALL COURSES",
+                    "id": "6f5f6e92-57d7-42e8-8c93-bfe2f28ce0a8",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/api/course/{{participant_id}}",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "course",
+                                "{{participant_id}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Course UPDATE COURSE",
+                    "id": "e67f9bc4-a7bb-46cb-ab6d-5ad71b28469d",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "url": null
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Course DELETE COURSE",
+                    "id": "98d70760-ab17-4e8c-a9d4-7b24401e7745",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": null
+                    },
+                    "response": []
+                }
+            ],
+            "id": "6d23e43f-25bd-4cfa-b089-5426786e67b5"
+        },
+        {
+            "name": "Attendance",
+            "item": [
+                {
+                    "name": "Attendance CREATE",
+                    "id": "8a1cb2ff-066c-458f-83af-db4de33adcb9",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/api/attendance/{{session_id}}",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "attendance",
+                                "{{session_id}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Attendance UPDATE RECORD",
+                    "id": "04124c78-a55d-4e68-affb-68af8358ac87",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "url": null
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Attendance DELETE RECORD",
+                    "id": "3be24da8-601c-4387-88cf-6ba30d6b5133",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": null
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Attendance GET SESSION RECORD",
+                    "id": "0de8b605-cf67-4981-af62-18e9a8119f09",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": null
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Attendance GET COURSE RECORD",
+                    "id": "4316a293-3208-4416-83bd-594b565a5548",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": null
+                    },
+                    "response": []
+                }
+            ],
+            "id": "0b702e3b-2de2-4f30-adc7-89861e9d579c"
+        },
+        {
+            "name": "Session",
+            "item": [
+                {
+                    "name": "Session CREATE",
+                    "id": "b944809d-fb5d-437e-8ba8-9ccd5510b425",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{URL}}/api/session/{{course_id}}",
+                            "host": [
+                                "{{URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "session",
+                                "{{course_id}}"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Session GET ALL FROM COURSE",
+                    "id": "11bd4352-f34b-4f3a-84a0-b7b631a6a7b6",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": null
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Session GET ONE",
+                    "id": "f3086e46-2a17-4e3e-a6a2-af7a21a3c137",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": null
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Session EDIT",
+                    "id": "fff4ffb6-46d0-4073-87cc-7d3f9527f105",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "url": null
+                    },
+                    "response": []
+                },
+                {
+                    "name": "_Session DELETE",
+                    "id": "4d88cd5b-90a4-430a-b137-c76f3d8336f7",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": null
+                    },
+                    "response": []
+                }
+            ],
+            "id": "4a4550b3-f3a1-4cfd-94bd-3b6332f54722"
+        }
+    ]
+}
