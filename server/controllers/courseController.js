@@ -46,21 +46,52 @@ export const addParticipantCourse = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc    get course details
+// @route   GET /api/course/:course_id
+// @access  Private - Organisations only
+export const getCourseOrganisation = asyncHandler(async (req, res) => {
+
+    const course = await Course.findOne({ _id: req.params.course_id })
+
+    console.log(req.origin)
+
+    if (course) return res.json(course)
+
+    res.status(404)
+    return res.json("Course ID invalid.")
+
+})
+
 
 // @desc    return the courses a participant is registered to
-// @route   GET /api/course/:participant_id
-// @access  Private - Organisations only
+// @route   GET /api/course/participant
+// @access  Private - Participant only
 export const findParticipantCourse = asyncHandler(async (req, res) => {
 
-    const { _id } = req.organisation;
-    const courses = await Course.find({ organisation: _id, participants: req.params.participant_id })
+    const { _id } = req.participant;
+    const courses = await Course.find({ participants: _id })
     if (courses) {
         console.log(courses)
-        res.json("Merry Xmas")
+        res.json(courses)
     } else {
         res.json("failed")
     }
 
+});
+
+// @desc    return the courses an organisation runs
+// @route   GET /api/course/organisation
+// @access  Private - Organisations only
+export const findOrganisationCourse = asyncHandler(async (req, res) => {
+
+    const { _id } = req.organisation;
+    const courses = await Course.find({ organisation: _id })
+    if (courses) {
+        console.log(courses)
+        res.json(courses)
+    } else {
+        res.json("failed")
+    }
 });
 
 // @desc    add participant to course

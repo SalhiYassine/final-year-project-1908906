@@ -31,3 +31,31 @@ export const createSession = asyncHandler(async (req, res) => {
     //     hello: coursesByOrganisation
     // })
 });
+
+// @desc    get sessions from a course
+// @route   get /api/session/course/:course-id
+// @access  Private - Organisations only
+export const getAllSessions = asyncHandler(async (req, res) => {
+
+    const sessions = await Session.find({ course: req.params.course_id })
+    if (sessions) {
+        return res.json(sessions)
+    } else {
+        res.status(404)
+        res.json("Not found.")
+    }
+});
+
+// @desc    get one session
+// @route   get /api/session/:session-id
+// @access  Private - Organisations only
+export const getOneSession = asyncHandler(async (req, res) => {
+
+    const session = await Session.find({ _id: req.params.session_id })
+    if (session) {
+        return res.json(session)
+    } else {
+        res.status(404)
+        res.json("Not found.")
+    }
+});

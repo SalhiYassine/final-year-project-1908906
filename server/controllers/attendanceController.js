@@ -29,7 +29,7 @@ export const attendSessionOnlineParticipant = asyncHandler(async (req, res) => {
                 if (!exists.guests && !expected) {
 
                     res.status(403)
-                    res.json("You are not expected to attend this session and the administrator has not allowed guests.")
+                    return res.json("You are not expected to attend this session and the administrator has not allowed guests.")
 
                 } else {
                     const newRecord = await Attendance.create({
@@ -40,8 +40,8 @@ export const attendSessionOnlineParticipant = asyncHandler(async (req, res) => {
                         expected
                     })
                     res.status(200)
-                    res.json({
-                        newRecord
+                    return res.json({
+                        ...newRecord
                     })
 
                 }

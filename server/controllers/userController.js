@@ -18,7 +18,7 @@ export const authUser = asyncHandler(async (req, res) => {
       httpOnly: true, // Stops the client accessing the cookie
       secure: process.env.NODE_ENV !== 'development', // secure if in production mode
     });
-    res.json({
+    return res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -77,7 +77,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 // @access  Private
 
 export const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.participant._id);
   if (user) {
     res.json({
       _id: user._id,
