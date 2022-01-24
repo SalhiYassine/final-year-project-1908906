@@ -46,12 +46,15 @@ export const attendSessionOnlineParticipant = asyncHandler(async (req, res) => {
 
                 }
             } else {
-                res.json("Course does not exist")
+                res.status(404)
+                return res.json("Course does not exist")
             }
         } else {
-            res.json("Session does not exist")
+            res.status(404)
+            return res.json("Session does not exist")
         }
     } else {
-        res.json("Student attendance alreadyy recorded.")
+        res.status(400)
+        return res.json("Student attendance already recorded.")
     }
 });

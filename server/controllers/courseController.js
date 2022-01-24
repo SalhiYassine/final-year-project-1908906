@@ -7,16 +7,9 @@ import asyncHandler from 'express-async-handler';
 // @access  Private - Organisations only
 export const createCourse = asyncHandler(async (req, res) => {
 
-    const { _id } = req.organisation;
-    const { title, description } = req.body;
-    console.log(_id, title, description)
-
-    const newCourse = await Course.create({ title, description, organisation: _id })
-    console.log(newCourse)
-
-    res.json({
-        hello: newCourse
-    })
+    const { _id, description, title } = await Course.create({ title: req.body.title, description: req.body.description, organisation: req.organisation._id })
+    res.status(201)
+    return res.json({ _id, description, title })
 });
 
 // @desc    add participant to course
@@ -29,7 +22,7 @@ export const addParticipantCourse = asyncHandler(async (req, res) => {
     console.log(course)
     if (course) {
         const participant_id = req.params.participant_id;
-        const participant = Participant.findOne({ _id: participant_id })
+        const participant = await Participant.findOne({ _id: participant_id })
         if (participant) {
             course.participants.push(participant_id)
             await course.save();
@@ -37,7 +30,8 @@ export const addParticipantCourse = asyncHandler(async (req, res) => {
             res.json("Merry Chrismas")
 
         } else {
-            res.json("Santa doesnt like naughty children.")
+            res.status(401)
+            res.json("Not authorised to perform action.")
         }
 
     } else {
@@ -56,6 +50,47 @@ export const getCourseOrganisation = asyncHandler(async (req, res) => {
     console.log(req.origin)
 
     if (course) return res.json(course)
+
+    res.status(404)
+    return res.json("Course ID invalid.")
+
+})
+
+
+// @desc    PUT course details
+// @route   PUT /api/course/:course_id
+// @access  Private - Organisations only
+export const updateCourseOrganisation = asyncHandler(async (req, res) => {
+
+    const course = await Course.findOne({ _id: req.params.course_id })
+    const { title, description } = course;
+
+    console.log(req.origin)
+
+    if (course) {
+        course.title = req.body.title || title;
+        course.description = req.body.description || description;
+        await course.save();
+
+        return res.json(course)
+    }
+
+    res.status(404)
+    return res.json("Course ID invalid.")
+
+})
+
+// @desc    DELETE course details
+// @route   DELETE /api/course/:course_id
+// @access  Private - Organisations only
+export const deleteCourseOrganisation = asyncHandler(async (req, res) => {
+
+    const course = await Course.findOne({ _id: req.params.course_id })
+
+    if (course) {
+        const deleted = await Course.deleteOne({ _id: req.params.course_id })
+        return res.json(deleted)
+    }
 
     res.status(404)
     return res.json("Course ID invalid.")

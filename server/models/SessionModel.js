@@ -4,7 +4,8 @@ const SessionSchema = mongoose.Schema(
     {
         title: { type: String, required: true },
         course: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Course' },
-        // date_Time: { type: Date, required: true },
+        // start_Time: { type: Date, required: true },
+        // end_Time: { type: Date, required: true },
         hybrid: { type: Boolean, required: true },
         guests: { type: Boolean, required: true },
         location: { type: String },

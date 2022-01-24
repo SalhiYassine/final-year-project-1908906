@@ -7,7 +7,7 @@ import { protectOrg, protectParticipant } from '../middleware/authMiddleware.js'
 
 const router = express.Router();
 
-router.route('/online/:session_id').post(protectParticipant, attendSessionOnlineParticipant);
+router.route('/:session_id').post(protectParticipant, attendSessionOnlineParticipant);
 
 
 export default router;
