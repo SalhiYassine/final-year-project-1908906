@@ -78,3 +78,17 @@ export const updateOneSession = asyncHandler(async (req, res) => {
         res.json("Not found.")
     }
 });
+
+// @desc    DELETE one session
+// @route   DELETE /api/session/:session-id
+// @access  Private - Organisations only
+export const deleteOneSession = asyncHandler(async (req, res) => {
+    const session = await Session.findOne({ _id: req.params.session_id })
+    if (session) {
+        const deleted = await Session.deleteOne({ _id: req.params.session_id })
+        return res.json(deleted)
+    } else {
+        res.status(404)
+        res.json("Not found.")
+    }
+});
