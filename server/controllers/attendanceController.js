@@ -43,7 +43,6 @@ export const attendSessionOnlineParticipant = asyncHandler(async (req, res) => {
                     return res.json({
                         ...newRecord
                     })
-
                 }
             } else {
                 res.status(404)

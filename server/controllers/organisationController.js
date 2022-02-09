@@ -23,6 +23,7 @@ export const authOrganisation = asyncHandler(async (req, res) => {
       _id: exists._id,
       name: exists.organisationName,
       email: exists.email,
+      admin: true
     });
   } else {
     res.status(401);
@@ -61,6 +62,8 @@ export const registerOrganisation = asyncHandler(async (req, res) => {
         _id: newOrganisation._id,
         name: newOrganisation.organisationName,
         email: newOrganisation.email,
+        admin: true
+
       });
     } else {
       res.status(401);

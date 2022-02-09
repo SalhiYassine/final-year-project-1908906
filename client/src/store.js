@@ -5,13 +5,18 @@ import {
   userDetailsReducer,
   userLoginReducer,
   userRegisterReducer,
-} from './reducers/userReducer';
+} from './redux/reducers/userReducer';
+import {
+  courseCreate
+
+} from './redux/reducers/courseReducer';
 import axios from 'axios';
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
+  courseCreate
 });
 
 const initialState = {

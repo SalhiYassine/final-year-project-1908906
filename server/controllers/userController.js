@@ -1,6 +1,7 @@
 import User from '../models/ParticipantModel.js';
 import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
+import Organisation from '../models/Organisation.js';
 
 // @desc    auth user and get a token
 // @route   POST /api/users/login
@@ -77,15 +78,27 @@ export const registerUser = asyncHandler(async (req, res) => {
 // @access  Private
 
 export const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.participant._id);
-  if (user) {
+
+  if (req.origin === 'participant') {
+    let user = await User.findById(req.participant._id);
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
+      isAdmin: false,
     });
-  } else {
+  }
+  else if (req.origin === 'organisation') {
+    let user = await Organisation.findById(req.organisation._id);
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: true,
+    });
+  }
+
+  else {
     res.status(401);
     throw new Error('User not found');
   }
