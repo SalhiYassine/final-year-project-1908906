@@ -21,7 +21,7 @@ const AdminRoute = ({
   return (
     <Redirect
       to={
-        path.split('/')[1] ? `/login?redirect=${path.split('/')[1]}` : `/login`
+        path.split('/')[1] ? `/organisation/login?redirect=${path.split('/')[1]}` : `/login`
       }
     />
   );

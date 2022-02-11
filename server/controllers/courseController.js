@@ -7,10 +7,27 @@ import asyncHandler from 'express-async-handler';
 // @access  Private - Organisations only
 export const createCourse = asyncHandler(async (req, res) => {
 
-    const { _id, description, title } = await Course.create({ title: req.body.title, description: req.body.description, organisation: req.organisation._id })
+    const course = await Course.create({ title: req.body.title, description: req.body.description, organisation: req.organisation._id })
     res.status(201)
-    return res.json({ _id, description, title })
+    return res.json(course)
 });
+
+// @desc    get all course
+// @route   GET /api/course/
+// @access  Private - Organisations only
+export const getAllCourses = asyncHandler(async (req, res) => {
+
+    const courses = await Course.find({ organisation: req.organisation._id })
+    if (courses) {
+
+        res.status(201)
+        return res.json(courses)
+    } else {
+        res.status(404)
+        return res.json("No courses found")
+    }
+});
+
 
 // @desc    add participant to course
 // @route   PUT /api/course/course_id/:participant_id
@@ -21,10 +38,10 @@ export const addParticipantCourse = asyncHandler(async (req, res) => {
     const course = await Course.findOne({ organisation: _id, _id: req.params.course_id })
     console.log(course)
     if (course) {
-        const participant_id = req.params.participant_id;
-        const participant = await Participant.findOne({ _id: participant_id })
+        const participant = await Participant.findOne({ email: req.body.email })
+        console.log(participant)
         if (participant) {
-            course.participants.push(participant_id)
+            course.participants.push(participant._id)
             await course.save();
 
             res.json("Merry Chrismas")

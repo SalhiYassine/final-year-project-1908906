@@ -7,16 +7,18 @@ import {
   userRegisterReducer,
 } from './redux/reducers/userReducer';
 import {
-  courseCreate
-
+  courseCreate, courseAddParticipant, courseGetAll
 } from './redux/reducers/courseReducer';
-import axios from 'axios';
+import { sessionCreate } from './redux/reducers/sessionReducer'
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
-  courseCreate
+  courseCreate,
+  courseAddParticipant,
+  courseGetAll,
+  sessionCreate,
 });
 
 const initialState = {
