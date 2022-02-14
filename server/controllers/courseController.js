@@ -65,7 +65,7 @@ export const getCourseOrganisation = asyncHandler(async (req, res) => {
 
     const course = await Course.findOne({ _id: req.params.course_id }).populate({
         path: 'participants',
-        select: '_id name surname email username'
+        select: '_id name surname email username createdAt updatedAt'
 
     })
     const sessions = await Session.find({ course: req.params.course_id })
