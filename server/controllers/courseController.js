@@ -1,4 +1,5 @@
 import Course from '../models/CourseModel.js';
+import Session from '../models/SessionModel.js';
 import Participant from '../models/ParticipantModel.js';
 import asyncHandler from 'express-async-handler';
 
@@ -62,11 +63,22 @@ export const addParticipantCourse = asyncHandler(async (req, res) => {
 // @access  Private - Organisations only
 export const getCourseOrganisation = asyncHandler(async (req, res) => {
 
-    const course = await Course.findOne({ _id: req.params.course_id })
+    const course = await Course.findOne({ _id: req.params.course_id }).populate({
+        path: 'participants',
+        select: '_id name surname email username'
+
+    })
+    const sessions = await Session.find({ course: req.params.course_id })
 
     console.log(req.origin)
 
-    if (course) return res.json(course)
+    if (course) {
+        if (sessions) {
+            return res.json({ course, sessions })
+        } else {
+            return res.json(course)
+        }
+    }
 
     res.status(404)
     return res.json("Course ID invalid.")

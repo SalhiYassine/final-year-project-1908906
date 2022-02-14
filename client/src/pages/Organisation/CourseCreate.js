@@ -26,7 +26,7 @@ const CourseCreate = () => {
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='title'>
-                    <Form.Label>title Address</Form.Label>
+                    <Form.Label>Title</Form.Label>
                     <Form.Control
                         type='text'
                         placeholder='Enter title'
@@ -35,7 +35,7 @@ const CourseCreate = () => {
                     />
                 </Form.Group>
                 <Form.Group controlId='description' className='my-3'>
-                    <Form.Label>description</Form.Label>
+                    <Form.Label>Description</Form.Label>
                     <Form.Control
                         type='text'
                         placeholder='Enter description'

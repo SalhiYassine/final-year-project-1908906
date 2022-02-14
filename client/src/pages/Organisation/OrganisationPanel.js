@@ -16,7 +16,7 @@ const CourseCreate = () => {
     const [description, setDescription] = useState('');
 
     useEffect(() => {
-        if (!success && !error) {
+        if (!success && !error && !loading) {
             dispatch(getAllCourses());
         }
     }, [success, error])
@@ -27,35 +27,41 @@ const CourseCreate = () => {
 
     return (
         <>
-            <h1>Courses</h1>
             {loading ? <Loader /> :
-                error ? <Message variant='danger'>{error}</Message> :
-                    <Table striped bordered hover responsive className='table-sm'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Created</th>
-                                <th>Title</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {courses.map((course) => (
-                                <tr key={course._id}>
-                                    <td>{course._id}</td>
-                                    <td>{course.createdAt.substring(0, 10)}</td>
-                                    <td>{course.title}</td>
-                                    <td>
-                                        <LinkContainer to={`/organisation/course/${course._id}`}>
-                                            <Button variant='outline-dark' className='btn-sm'>
-                                                Details
-                                            </Button>
-                                        </LinkContainer>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                error ? <Message variant='danger'>{error}</Message> : courses ?
+                    <>
+                        <div className='w-75 m-auto'>
+                            <h1>Courses</h1>
+                            <Table striped bordered hover responsive className='table-sm'>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Created</th>
+                                        <th>Title</th>
+                                        <th>Participants</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {courses.map((course) => (
+                                        <tr key={course._id}>
+                                            <td>{course._id}</td>
+                                            <td>{course.createdAt.substring(0, 10)}</td>
+                                            <td>{course.title}</td>
+                                            <td>{course.participants.length}</td>
+                                            <td>
+                                                <LinkContainer to={`/course/${course._id}`}>
+                                                    <Button variant='outline-dark' className='btn-sm'>
+                                                        Details
+                                                    </Button>
+                                                </LinkContainer>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </div>
+                    </> : <h2>No Courses Available</h2>
             }
 
         </>
