@@ -11,10 +11,10 @@ import { getOneCourses } from '../../redux/actions/courseAction';
 import { createSession } from '../../redux/actions/sessionAction';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const SessionCreate = ({ match, history }) => {
+const SessionUpdate = ({ match, history }) => {
 
     const dispatch = useDispatch();
-    const { loading, error } = useSelector((state) => state.sessionCreate);
+    const { loading, error } = useSelector((state) => state.sessionUpdate);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [url, setUrl] = useState('');
@@ -39,7 +39,6 @@ const SessionCreate = ({ match, history }) => {
     const filterEndPassedTime = (time) => {
         const currentDate = startDate;
         const selectedDate = new Date(time);
-
         return currentDate.getTime() < selectedDate.getTime();
     };
 
@@ -168,4 +167,4 @@ const SessionCreate = ({ match, history }) => {
     );
 };
 
-export default SessionCreate;
+export default SessionUpdate;

@@ -12,15 +12,15 @@ export const createSession = asyncHandler(async (req, res) => {
     const course = await Course.findOne({ organisation: _id, _id: req.params.course_id })
     console.log(course)
     if (course) {
-        const { title, hybrid, guests } = req.body;
-        const newSession = await Session.create({ title, hybrid, guests, course: req.params.course_id })
+        const { title, hybrid, guests, startDate, endDate, url, location } = req.body;
+        const newSession = await Session.create({ title, hybrid, guests, course: req.params.course_id, url, start_date: startDate, end_date: endDate, location })
         res.status(201)
         res.json({
             _id: newSession._id, title: newSession.title
         })
     } else {
         res.status(404)
-        res.json("This course either does not exist or does not belong to your organisation, ensure this course exists!")
+        throw new Error("This course either does not exist or does not belong to your organisation, ensure this course exists!")
     }
 
 
@@ -43,7 +43,7 @@ export const getAllSessions = asyncHandler(async (req, res) => {
         return res.json(sessions)
     } else {
         res.status(404)
-        res.json("Not found.")
+        throw new Error("Session not found.")
     }
 });
 
@@ -57,7 +57,7 @@ export const getOneSession = asyncHandler(async (req, res) => {
         return res.json(session)
     } else {
         res.status(404)
-        res.json("Not found.")
+        throw new Error("Session not found.")
     }
 });
 
@@ -75,7 +75,7 @@ export const updateOneSession = asyncHandler(async (req, res) => {
         return res.json(session)
     } else {
         res.status(404)
-        res.json("Not found.")
+        throw new Error("Not found.")
     }
 });
 
@@ -89,6 +89,6 @@ export const deleteOneSession = asyncHandler(async (req, res) => {
         return res.json(deleted)
     } else {
         res.status(404)
-        res.json("Not found.")
+        throw new Error("Not found.")
     }
 });

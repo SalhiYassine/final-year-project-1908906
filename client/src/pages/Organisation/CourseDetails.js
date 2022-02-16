@@ -6,6 +6,7 @@ import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import { getOneCourses, addParticipantCourse, removeParticipantCourse } from '../../redux/actions/courseAction';
+import { deleteOneSession } from '../../redux/actions/sessionAction';
 
 const CourseDetails = ({ match, history }) => {
 
@@ -40,14 +41,25 @@ const CourseDetails = ({ match, history }) => {
 
     }
 
+    const onDeleteSession = (session_id) => {
+
+        const id = match.params.id;
+        dispatch(deleteOneSession(session_id))
+        dispatch(getOneCourses(id))
+
+
+    }
+
 
 
 
     return (
         <>
-            <Button type='submit' className='my-3' variant='light'>
-                GO BACK
-            </Button>
+            <LinkContainer to={`/`} as='div'>
+                <Button type='submit' className='my-3' variant='light'>
+                    GO BACK
+                </Button>
+            </LinkContainer>
             {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> :
                 <div className='m-auto p-2 w-100'>
                     {
@@ -197,6 +209,7 @@ const CourseDetails = ({ match, history }) => {
                                                                 type='submit'
                                                                 className='my-3'
                                                                 variant='danger'
+                                                                onClick={() => onDeleteSession(session._id)}
                                                             >
                                                                 Remove
                                                             </Button>

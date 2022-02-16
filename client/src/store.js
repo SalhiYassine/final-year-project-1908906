@@ -9,7 +9,7 @@ import {
 import {
   courseCreate, courseAddParticipant, courseGetAll, courseGetOne, courseRemoveParticipant
 } from './redux/reducers/courseReducer';
-import { sessionCreate } from './redux/reducers/sessionReducer'
+import { sessionCreate, sessionUpdate, sessionGetOne } from './redux/reducers/sessionReducer'
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -21,6 +21,9 @@ const reducer = combineReducers({
   courseGetAll,
   courseGetOne,
   sessionCreate,
+  sessionUpdate,
+  sessionGetOne,
+
 });
 
 const initialState = {
