@@ -1,25 +1,46 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
-import { getOneCourses } from '../../redux/actions/courseAction';
+import { getOneCourses, addParticipantCourse, removeParticipantCourse } from '../../redux/actions/courseAction';
 
 const CourseDetails = ({ match, history }) => {
 
     const dispatch = useDispatch();
     const { loading, error, success, course, sessions } = useSelector((state) => state.courseGetOne);
+    const { loading: addParticipantLoading, error: addParticipantError, success: addParticipantSuccess } = useSelector((state) => state.courseAddParticipant);
+    const { loading: removeParticipantLoading, error: removeParticipantError, success: removeParticipantSuccess } = useSelector((state) => state.courseRemoveParticipant);
+
+    const [participantEmail, setParticipantEmail] = useState()
 
     useEffect(() => {
         const id = match.params.id;
-        if (!error && !success) {
-            dispatch(getOneCourses(id))
-        } else if (id !== course._id) {
-            dispatch(getOneCourses(id))
+        dispatch(getOneCourses(id))
+
+    }, [addParticipantSuccess, removeParticipantSuccess])
+
+    const onSubmitAddParticipant = (e) => {
+
+        e.preventDefault()
+        if (!addParticipantLoading) {
+            dispatch(addParticipantCourse(match.params.id, participantEmail))
+            setParticipantEmail('')
         }
-    }, [error, success, match, dispatch])
+    }
+
+    const onDeleteParticipant = (email) => {
+
+        const id = match.params.id;
+        dispatch(removeParticipantCourse(id, email))
+        dispatch(getOneCourses(id))
+
+
+    }
+
+
 
 
     return (
@@ -79,21 +100,29 @@ const CourseDetails = ({ match, history }) => {
                                     </Button>
 
                                 </Form>
-                                <h2>Partcipants
-                                    <Button type='submit' className='m-3 ' variant='success'>
-                                        ADD Participant
-                                    </Button></h2>
+                                <Form className='d-flex my-3 align-items-center' onSubmit={(e) => onSubmitAddParticipant(e)} inline>
+                                    <h2>Partcipants</h2>
+                                    <Form.Control
+                                        type='text'
+                                        placeholder='Add a participant'
+                                        value={participantEmail}
+                                        disabled={addParticipantLoading}
+                                        onChange={(e) => setParticipantEmail(e.target.value)}
+                                        className='me-sm-2 ms-sm-5 py-3'></Form.Control>
+                                    <Button disabled={addParticipantLoading} type='submit' variant='outline-success' className='px-5'>
+                                        ADD
+                                    </Button>
+                                </Form>
+                                {addParticipantError && <Message variant='danger'>{addParticipantError}</Message>}
                                 {course.participants &&
-
                                     <Table striped bordered hover responsive className='table-sm w-100 py-3'>
-
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Signed Up</th>
+                                                {/* <th>ID</th> */}
                                                 <th>Name</th>
                                                 <th>Surname</th>
                                                 <th>Email</th>
+                                                <th>Signed Up</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -101,22 +130,22 @@ const CourseDetails = ({ match, history }) => {
                                             {course.participants.map((participant) => (
                                                 <>
                                                     <tr key={participant._id}>
-                                                        <td>{participant._id}</td>
-                                                        <td>{participant.createdAt.substring(0, 10)}</td>
+                                                        {/* <td>{participant._id}</td> */}
                                                         <td>{participant.name}</td>
                                                         <td>{participant.surname}</td>
                                                         <td>{participant.email}</td>
+                                                        <td>{participant.createdAt.substring(0, 10)}</td>
                                                         <td>
                                                             <Button
                                                                 type='submit'
                                                                 className='my-3'
                                                                 variant='danger'
+                                                                onClick={() => onDeleteParticipant(participant.email)}
                                                             >
                                                                 Remove
                                                             </Button>
                                                         </td>
                                                     </tr>
-
                                                 </>
                                             ))}
                                         </tbody>
@@ -124,21 +153,25 @@ const CourseDetails = ({ match, history }) => {
                                 }
 
                                 <h2>Sessions
-                                    <Button type='submit' className='m-3 ' variant='success'>
-                                        ADD Session
-                                    </Button></h2>
+                                    <LinkContainer to={`/course/${match.params.id}/session/create`} as='div'>
+
+                                        <Button type='submit' className='m-3 ' variant='success'>
+                                            ADD Session
+                                        </Button>
+                                    </LinkContainer>
+                                </h2>
                                 {sessions &&
 
                                     <Table striped bordered hover responsive className='table-sm w-100 py-3'>
 
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                {/* <th>ID</th> */}
+                                                <th>Title</th>
+                                                <th>Guests</th>
+                                                <th>Hybrid</th>
                                                 <th>Created</th>
                                                 <th>Updated</th>
-                                                <th>Title</th>
-                                                <th>Hybrid</th>
-                                                <th>Guests</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -146,12 +179,12 @@ const CourseDetails = ({ match, history }) => {
                                             {sessions.map((session) => (
                                                 <>
                                                     <tr key={session._id}>
-                                                        <td>{session._id}</td>
+                                                        {/* <td>{session._id}</td> */}
+                                                        <td>{session.title}</td>
+                                                        <td>{session.guests.toString()}</td>
+                                                        <td>{session.hybrid.toString()}</td>
                                                         <td>{session.createdAt.substring(0, 10)}</td>
                                                         <td>{session.updatedAt.substring(0, 10)}</td>
-                                                        <td>{session.title}</td>
-                                                        <td>{session.hybrid.toString()}</td>
-                                                        <td>{session.guests.toString()}</td>
                                                         <td>
                                                             <Button
                                                                 type='submit'

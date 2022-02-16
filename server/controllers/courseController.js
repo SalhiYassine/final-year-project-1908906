@@ -2,6 +2,7 @@ import Course from '../models/CourseModel.js';
 import Session from '../models/SessionModel.js';
 import Participant from '../models/ParticipantModel.js';
 import asyncHandler from 'express-async-handler';
+import e from 'express';
 
 // @desc    create a course
 // @route   POST /api/course/
@@ -42,19 +43,27 @@ export const addParticipantCourse = asyncHandler(async (req, res) => {
         const participant = await Participant.findOne({ email: req.body.email })
         console.log(participant)
         if (participant) {
-            course.participants.push(participant._id)
-            await course.save();
+            const exists = course.participants.find(
+                (r) => r.toString() === participant._id.toString()
+            );
+            if (!exists) {
+                course.participants.push(participant._id)
+                await course.save();
+                res.json("Participant added to course!")
+            } else {
+                res.status(401)
+                throw new Error('User already in course.')
+            }
 
-            res.json("Merry Chrismas")
 
         } else {
             res.status(401)
-            res.json("Not authorised to perform action.")
+            throw new Error("Not authorised to perform action.")
         }
 
     } else {
         res.status(404)
-        res.json("This course either does not exist or does not belong to your organisation, ensure this course exists!")
+        throw new Error("This course either does not exist or does not belong to your organisation, ensure this course exists!")
     }
 });
 
@@ -158,14 +167,39 @@ export const findOrganisationCourse = asyncHandler(async (req, res) => {
     }
 });
 
-// @desc    add participant to course
-// @route   PUT /api/course/course_id/:participant_id
-// @access  Private - Organisations only
+
 export const removeParticipantCourse = asyncHandler(async (req, res) => {
 
     const { _id } = req.organisation;
-    const courses = await Course.find({ organisation: _id, participants: req.params.participant_id })
-    console.log(courses)
-    res.json("Merry Xmas")
+    const course = await Course.findOne({ organisation: _id, _id: req.params.course_id })
+    if (course) {
+        console.log(req.body)
+        const participant = await Participant.findOne({ email: req.body.email })
+        console.log(participant)
+        if (participant) {
+            const exists = course.participants.find(
+                (r) => r.toString() === participant._id.toString()
+            );
+            if (exists) {
+                course.participants = course.participants.filter(function (p) {
+                    console.log(p.toString() === participant._id.toString())
+                    return p.toString() !== participant._id.toString();
+                })
+                await course.save();
+                res.json("Participant removed from course!")
+            } else {
+                res.status(401)
+                throw new Error('User is not in course.')
+            }
+        } else {
+            res.status(401)
+            throw new Error("Participant does not exist!")
+        }
+
+    } else {
+        res.status(404)
+        throw new Error('Course could not be found or does not belong to your organisation!')
+    }
+
 
 });

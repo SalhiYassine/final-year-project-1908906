@@ -20,6 +20,7 @@ import CourseDetails from '../pages/Organisation/CourseDetails'
 import SessionCreate from '../pages/Organisation/sessionCreate';
 import Header from '../components/Header';
 import Loader from '../components/Loader';
+import Footer from '../components/Footer';
 
 const PageRouter = () => {
   const { authenticated, admin, loading } = useSelector((state) => state.userLogin);
@@ -30,7 +31,7 @@ const PageRouter = () => {
         <Header />
         <Container>
           <Switch>
-            <AdminRoute isAuthenticated={authenticated} isAdmin={admin} exact path='/session/create' component={SessionCreate} />
+            <AdminRoute isAuthenticated={authenticated} isAdmin={admin} exact path='/course/:id/session/create' component={SessionCreate} />
             <AdminRoute isAuthenticated={authenticated} isAdmin={admin} exact path='/course/create' component={CourseCreate} />
             {/* course details */}
             <AdminRoute isAuthenticated={authenticated} isAdmin={admin} path='/course/:id' component={CourseDetails} />
@@ -41,6 +42,7 @@ const PageRouter = () => {
             <h2>Working PageRouter</h2>
           </Switch>
         </Container>
+        <Footer />
       </Router>
     );
   } else if (!loading && authenticated && !admin) {
@@ -55,6 +57,8 @@ const PageRouter = () => {
             <h2>Working PageRouter</h2>
           </Switch>
         </Container>
+        <Footer />
+
       </Router>
     );
   } else {
@@ -72,6 +76,7 @@ const PageRouter = () => {
             <h2>Working PageRouter</h2>
           </Switch>
         </Container>
+        <Footer />
       </Router>
     )
   }

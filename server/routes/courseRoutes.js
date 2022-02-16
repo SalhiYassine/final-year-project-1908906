@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-    deleteCourseOrganisation, createCourse, addParticipantCourse, findParticipantCourse, findOrganisationCourse, getCourseOrganisation, updateCourseOrganisation, getAllCourses
+    deleteCourseOrganisation, createCourse, addParticipantCourse, findParticipantCourse, findOrganisationCourse, getCourseOrganisation, updateCourseOrganisation, getAllCourses, removeParticipantCourse
 } from '../controllers/courseController.js';
 import { protectAny, protectOrg, protectParticipant } from '../middleware/authMiddleware.js';
 
@@ -16,7 +16,7 @@ router.route('/:course_id').get(protectAny, getCourseOrganisation);
 router.route('/:course_id').put(protectOrg, updateCourseOrganisation);
 router.route('/:course_id').delete(protectOrg, deleteCourseOrganisation);
 router.route('/:course_id/participant').post(protectOrg, addParticipantCourse);
-router.route('/:course_id/:participant_id').delete(protectOrg, addParticipantCourse);
+router.route('/:course_id/participant').put(protectOrg, removeParticipantCourse);
 
 
 export default router;

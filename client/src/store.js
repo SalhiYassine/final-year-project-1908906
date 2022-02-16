@@ -7,7 +7,7 @@ import {
   userRegisterReducer,
 } from './redux/reducers/userReducer';
 import {
-  courseCreate, courseAddParticipant, courseGetAll, courseGetOne
+  courseCreate, courseAddParticipant, courseGetAll, courseGetOne, courseRemoveParticipant
 } from './redux/reducers/courseReducer';
 import { sessionCreate } from './redux/reducers/sessionReducer'
 
@@ -17,6 +17,7 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   courseCreate,
   courseAddParticipant,
+  courseRemoveParticipant,
   courseGetAll,
   courseGetOne,
   sessionCreate,
