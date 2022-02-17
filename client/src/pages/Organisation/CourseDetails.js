@@ -198,13 +198,15 @@ const CourseDetails = ({ match, history }) => {
                                                         <td>{session.createdAt.substring(0, 10)}</td>
                                                         <td>{session.updatedAt.substring(0, 10)}</td>
                                                         <td>
-                                                            <Button
-                                                                type='submit'
-                                                                className='my-3'
-                                                                variant='primary'
-                                                            >
-                                                                View
-                                                            </Button>
+                                                            <LinkContainer to={`/session/${session._id}`} as='div'>
+                                                                <Button
+                                                                    type='submit'
+                                                                    className='my-3'
+                                                                    variant='primary'
+                                                                >
+                                                                    View
+                                                                </Button>
+                                                            </LinkContainer>
                                                             <Button
                                                                 type='submit'
                                                                 className='my-3'

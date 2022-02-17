@@ -4,9 +4,9 @@ const AttendanceSchema = mongoose.Schema(
     {
         session: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Session' },
         participant: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Participant' },
-        date_Time: { type: Date, required: true, },
-        location: { type: String, required: true, },
-        expected: { type: String, required: true, },
+        date_time: { type: Date, required: false, },
+        location: { type: String, required: false, },
+        expected: { type: String, required: false, },
     },
     { timestamps: true }
 );

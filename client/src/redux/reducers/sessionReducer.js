@@ -51,7 +51,8 @@ export const sessionGetOne = (state = {}, action) => {
             return {
                 loading: false,
                 success: true,
-                session: action.payload,
+                session: action.payload.session,
+                attendance: action.payload.attendence,
             };
         case SESSION_GET_FAIL:
             return {

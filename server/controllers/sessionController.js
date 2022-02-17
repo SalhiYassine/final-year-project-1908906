@@ -2,6 +2,7 @@ import Course from '../models/CourseModel.js';
 import Session from '../models/SessionModel.js';
 
 import asyncHandler from 'express-async-handler';
+import Attendance from '../models/AttendanceModel.js';
 
 // @desc    create a session
 // @route   POST /api/session/:course-id
@@ -52,9 +53,65 @@ export const getAllSessions = asyncHandler(async (req, res) => {
 // @access  Private - Organisations only
 export const getOneSession = asyncHandler(async (req, res) => {
 
-    const session = await Session.find({ _id: req.params.session_id })
+    const session = await Session.findOne({ _id: req.params.session_id })
     if (session) {
-        return res.json(session)
+        const attendence = await Attendance.find({ session: req.params.session_id }).populate({
+            path: 'participant',
+            select: '_id name surname email username'
+        })
+        console.log(attendence)
+        const { participants } = await Course.findOne({ _id: session.course }).populate({
+            path: 'participants',
+            select: '_id name surname email username'
+        })
+
+        const attendees = () => {
+            const roster = []
+            attendence.map((record) => {
+                const new_record = {
+                    _id: record.participant._id,
+                    name: record.participant.name,
+                    surname: record.participant.surname,
+                    username: record.participant.username,
+                    email: record.participant.email,
+                    expected: record.participant.expected,
+                    attended: true,
+                    attendedAt: record.dateTime || 'unknown',
+                    location: record.location || 'unknown'
+                }
+                roster.push(new_record)
+            })
+            participants.map((participant) => {
+
+                const exists = () => {
+                    const isThere = attendence.find(
+                        (r) => r.participant._id.toString() === participant._id.toString()
+                    )
+                    if (isThere) {
+                        return true
+                    } else return false
+                }
+
+                if (!exists()) {
+                    const new_record = {
+                        _id: participant._id,
+                        name: participant.name,
+                        surname: participant.surname,
+                        username: participant.username,
+                        email: participant.email,
+                        expected: true,
+                        attended: false,
+                        attendedAt: false,
+                        location: false
+                    }
+                    roster.push(new_record)
+                }
+            })
+            console.log(roster)
+            return roster
+        }
+        return res.json({ session, attendence: attendees() })
+
     } else {
         res.status(404)
         throw new Error("Session not found.")

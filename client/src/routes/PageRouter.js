@@ -21,6 +21,8 @@ import SessionCreate from '../pages/Organisation/sessionCreate';
 import Header from '../components/Header';
 import Loader from '../components/Loader';
 import Footer from '../components/Footer';
+import SessionDetail from '../pages/Organisation/SessionDetail';
+import SessionUpdate from '../pages/Organisation/SessionUpdate';
 
 const PageRouter = () => {
   const { authenticated, admin, loading } = useSelector((state) => state.userLogin);
@@ -34,7 +36,9 @@ const PageRouter = () => {
             <AdminRoute isAuthenticated={authenticated} isAdmin={admin} exact path='/course/:id/session/create' component={SessionCreate} />
             <AdminRoute isAuthenticated={authenticated} isAdmin={admin} exact path='/course/create' component={CourseCreate} />
             {/* course details */}
+            <AdminRoute isAuthenticated={authenticated} isAdmin={admin} path='/session/:id/update' component={SessionUpdate} />
             <AdminRoute isAuthenticated={authenticated} isAdmin={admin} path='/course/:id' component={CourseDetails} />
+            <AdminRoute isAuthenticated={authenticated} isAdmin={admin} path='/session/:id' component={SessionDetail} />
             <AdminRoute isAuthenticated={authenticated} isAdmin={admin} exact path={['/', '*']} component={OrganisationPanel} />
 
 
