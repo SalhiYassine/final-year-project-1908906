@@ -201,8 +201,8 @@ const CourseDetails = ({ match, history }) => {
                                                             <LinkContainer to={`/session/${session._id}`} as='div'>
                                                                 <Button
                                                                     type='submit'
-                                                                    className='my-3'
-                                                                    variant='primary'
+                                                                    className=''
+                                                                    variant='dark'
                                                                 >
                                                                     View
                                                                 </Button>

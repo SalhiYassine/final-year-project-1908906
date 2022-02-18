@@ -28,7 +28,7 @@ const LoginPage = ({ history, location }) => {
 
     return (
         <FormContainer>
-            <h1>Sign in</h1>
+            <h1>Organisation Sign in</h1>
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>

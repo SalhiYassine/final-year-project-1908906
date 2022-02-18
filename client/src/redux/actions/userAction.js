@@ -46,16 +46,12 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 
-export const register = (name, email, password) => async (dispatch) => {
+export const register = (user) => async (dispatch) => {
   try {
     dispatch({ type: USER_REGISTER_REQUEST });
 
     // Registering adds a cookie which can be used for future requests
-    const registerResponse = await axios.post('/api/participant', {
-      name,
-      email,
-      password,
-    });
+    const registerResponse = await axios.post('/api/participant', user);
 
     // If there were no errors then we can fetch the user profile
     const { data } = await axios.get(`/api/participant/profile`);

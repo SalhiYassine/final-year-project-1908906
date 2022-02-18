@@ -141,7 +141,6 @@ const SessionUpdate = ({ match, history }) => {
                                         className='mb-3'
                                         value={location}
                                         onChange={(e) => setLocation(e.target.value)}
-
                                     />
                                 </>
                             }
@@ -151,7 +150,7 @@ const SessionUpdate = ({ match, history }) => {
                                 <Form.Check
                                     className='mx-3'
                                     type='checkbox'
-                                    value={guests}
+                                    checked={guests}
                                     onChange={(e) => setGuests(!guests)}
                                 />
                             </Form.Group>

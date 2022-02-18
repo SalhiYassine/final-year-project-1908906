@@ -58,7 +58,7 @@ export const protectAny = asyncHandler(async (req, res, next) => {
       const participant = await Participant.findById(decoded.id).select('-password');
       const organisation = await Organisation.findById(decoded.id).select('-password');
       if (participant) {
-        req.participant = { ...participant }
+        req.participant = participant;
         req.origin = "participant"
 
       } else if (organisation) {

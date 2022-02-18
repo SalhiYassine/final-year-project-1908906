@@ -28,7 +28,7 @@ const LoginPage = ({ history, location }) => {
 
     return (
         <FormContainer>
-            <h1>Sign in</h1>
+            <h1>Participant Sign in</h1>
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
@@ -56,7 +56,7 @@ const LoginPage = ({ history, location }) => {
                 <Row>
                     <Col>
                         New Customer?
-                        <Link to={path ? `/register?redirect=${path}` : '/register'}>
+                        <Link to={path ? `/participant/register?redirect=${path}` : '/participant/register'}>
                             Register
                         </Link>
                     </Col>

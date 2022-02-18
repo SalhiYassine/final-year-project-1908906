@@ -20,7 +20,10 @@ const Header = () => {
                 <Container>
                     <LinkContainer to='/'>
                         {admin ?
-                            <Navbar.Brand>Admin Panel</Navbar.Brand> : <Navbar.Brand>Participant Panel</Navbar.Brand>
+                            <Navbar.Brand>Admin Panel</Navbar.Brand> :
+
+                            authenticated ? <Navbar.Brand>Participant Panel</Navbar.Brand> :
+                                <Navbar.Brand>Landing Panel</Navbar.Brand>
                         }
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />

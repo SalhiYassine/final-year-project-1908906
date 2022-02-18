@@ -12,6 +12,8 @@ const RegisterPage = ({ history, location }) => {
     const { loading, error } = useSelector(
         (state) => state.userRegister
     );
+    const [username, setUsername] = useState('');
+    const [surname, setSurname] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,9 +26,9 @@ const RegisterPage = ({ history, location }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        if (password == passwordConfirmation) {
+        if (password === passwordConfirmation) {
             setMessage('');
-            dispatch(register(name, email, password));
+            dispatch(register({ name, email, password, surname, username }));
         } else {
             setMessage('Passwords do not match!');
         }
@@ -45,13 +47,30 @@ const RegisterPage = ({ history, location }) => {
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
-                <Form.Group controlId='name' className='my-3'>
-                    <Form.Label>Full Name</Form.Label>
+                <Form.Group controlId='username' className='my-3'>
+                    <Form.Label>Userame</Form.Label>
                     <Form.Control
                         type='text'
-                        placeholder='Enter Full Name'
+                        placeholder='Enter Userame'
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </Form.Group><Form.Group controlId='name' className='my-3'>
+                    <Form.Label>First Name</Form.Label>
+                    <Form.Control
+                        type='text'
+                        placeholder='Enter First Name'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                    />
+                </Form.Group>
+                <Form.Group controlId='surname' className='my-3'>
+                    <Form.Label>Last Name</Form.Label>
+                    <Form.Control
+                        type='text'
+                        placeholder='Enter Last Name'
+                        value={surname}
+                        onChange={(e) => setSurname(e.target.value)}
                     />
                 </Form.Group>
                 <Form.Group controlId='email'>

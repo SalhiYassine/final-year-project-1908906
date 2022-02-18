@@ -122,12 +122,21 @@ export const getOneSession = asyncHandler(async (req, res) => {
 // @route   get /api/session/:session-id
 // @access  Private - Organisations only
 export const updateOneSession = asyncHandler(async (req, res) => {
-    const { title, hybrid, guests } = req.body;
+    const { title, hybrid, guests, startDate, endDate, url, location } = req.body;
+    console.log(req.body)
     const session = await Session.findOne({ _id: req.params.session_id })
+
+
     if (session) {
         session.title = title || session.title;
         session.hybrid = hybrid || session.hybrid;
-        session.guests = guests || session.guests;
+        session.guests = guests;
+        session.start_date = startDate || session.start_date;
+        session.end_date = endDate || session.end_date;
+        session.url = url || session.url;
+        session.location = location || session.location;
+
+
         await session.save()
         return res.json(session)
     } else {

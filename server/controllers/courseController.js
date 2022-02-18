@@ -144,10 +144,19 @@ export const findParticipantCourse = asyncHandler(async (req, res) => {
     const { _id } = req.participant;
     const courses = await Course.find({ participants: _id })
     if (courses) {
-        console.log(courses)
-        res.json(courses)
+        let arr = []
+        for (let i = 0; courses.length > i; i++) {
+            const c = courses[i]
+            const sessions = await Session.find({ course: c._id })
+            for (let j = 0; sessions.length > j; j++) {
+                arr.push(sessions[j])
+            }
+        }
+        console.log(arr)
+        res.json(arr)
     } else {
-        res.json("failed")
+        res.status(404)
+        throw new Error('Course could not be found!')
     }
 
 });
