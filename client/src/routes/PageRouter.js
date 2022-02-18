@@ -23,6 +23,7 @@ import Loader from '../components/Loader';
 import Footer from '../components/Footer';
 import SessionDetail from '../pages/Organisation/SessionDetail';
 import SessionUpdate from '../pages/Organisation/SessionUpdate';
+import ParticipantPanel from '../pages/Participant/ParticipantPanel';
 
 const PageRouter = () => {
   const { authenticated, admin, loading } = useSelector((state) => state.userLogin);
@@ -58,7 +59,7 @@ const PageRouter = () => {
           <Switch>
             {/* Participant */}
 
-            <h2>Working PageRouter</h2>
+            <PrivateRoute path='/' isAuthenticated={authenticated} exact component={ParticipantPanel} />
           </Switch>
         </Container>
         <Footer />

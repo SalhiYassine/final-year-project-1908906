@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { SESSION_CREATE_REQUEST, SESSION_CREATE_SUCCESS, SESSION_CREATE_FAIL, SESSION_UPDATE_REQUEST, SESSION_UPDATE_SUCCESS, SESSION_UPDATE_FAIL, SESSION_GET_REQUEST, SESSION_GET_SUCCESS, SESSION_GET_FAIL, SESSION_DELETE_REQUEST, SESSION_DELETE_SUCCESS, SESSION_DELETE_FAIL } from '../constants/sessionConstants'
+import { SESSION_CREATE_REQUEST, SESSION_CREATE_SUCCESS, SESSION_CREATE_FAIL, SESSION_UPDATE_REQUEST, SESSION_UPDATE_SUCCESS, SESSION_UPDATE_FAIL, SESSION_GET_REQUEST, SESSION_GET_SUCCESS, SESSION_GET_FAIL, SESSION_DELETE_REQUEST, SESSION_DELETE_SUCCESS, SESSION_DELETE_FAIL, SESSION_PARTICIPANT_GET_ALL_REQUEST, SESSION_PARTICIPANT_GET_ALL_SUCCESS, SESSION_PARTICIPANT_GET_ALL_FAIL } from '../constants/sessionConstants'
 
 
 axios.defaults.withCredentials = true;
@@ -63,6 +63,32 @@ export const getOneSession = (session_id) => async (dispatch) => {
         });
     }
 };
+
+export const getParticipantSessions = () => async (dispatch) => {
+    try {
+        dispatch({ type: SESSION_PARTICIPANT_GET_ALL_REQUEST });
+
+        const { data } = await axios.get(`/api/course/participant`);
+
+        data.sort((a, b) => {
+            let ab = new Date(b.start_date.toString())
+            let bb = new Date(a.start_date.toString())
+            return bb - ab
+        })
+
+        dispatch({ type: SESSION_PARTICIPANT_GET_ALL_SUCCESS, payload: data });
+
+    } catch (error) {
+        dispatch({
+            type: SESSION_PARTICIPANT_GET_ALL_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
 
 export const deleteOneSession = (session_id) => async (dispatch) => {
     try {

@@ -3,6 +3,7 @@ import Session from '../models/SessionModel.js';
 import Participant from '../models/ParticipantModel.js';
 import asyncHandler from 'express-async-handler';
 import e from 'express';
+import Attendance from '../models/AttendanceModel.js';
 
 // @desc    create a course
 // @route   POST /api/course/
@@ -149,7 +150,8 @@ export const findParticipantCourse = asyncHandler(async (req, res) => {
             const c = courses[i]
             const sessions = await Session.find({ course: c._id })
             for (let j = 0; sessions.length > j; j++) {
-                arr.push(sessions[j])
+                if (Date.parse(new Date()) - Date.parse(sessions[j].end_date) < 0)
+                    arr.push(sessions[j])
             }
         }
         console.log(arr)
@@ -158,7 +160,6 @@ export const findParticipantCourse = asyncHandler(async (req, res) => {
         res.status(404)
         throw new Error('Course could not be found!')
     }
-
 });
 
 // @desc    return the courses an organisation runs
