@@ -7,6 +7,7 @@ import { getParticipantSessions } from '../../redux/actions/sessionAction'
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import { Button } from 'react-bootstrap';
+import { getParticipantRecord } from '../../redux/actions/attendanceAction';
 
 
 const ParticipantPanel = () => {
@@ -20,6 +21,8 @@ const ParticipantPanel = () => {
     }
     useEffect(() => {
         dispatch(getParticipantSessions())
+        dispatch(getParticipantRecord())
+
     }, [])
 
     return (
@@ -37,7 +40,6 @@ const ParticipantPanel = () => {
                                 iconStyle={!canBeAttended(s.start_date, s.end_date) ? { background: 'rgb(0, 98, 72)', color: 'white' } : { background: 'rgb(0, 59, 198)', color: 'white' }}
                                 animate
                                 icon={!canBeAttended(s.start_date, s.end_date) ? <fa.FaCalendarCheck /> : <fa.FaCalendarDay />}
-
                             >
                                 <h4 className="vertical-timeline-element-title">{s.title}</h4>
                                 <h6 className="vertical-timeline-element-subtitle">{s.hybrid}</h6>

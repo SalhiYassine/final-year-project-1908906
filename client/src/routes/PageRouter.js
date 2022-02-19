@@ -24,6 +24,7 @@ import Footer from '../components/Footer';
 import SessionDetail from '../pages/Organisation/SessionDetail';
 import SessionUpdate from '../pages/Organisation/SessionUpdate';
 import ParticipantPanel from '../pages/Participant/ParticipantPanel';
+import ParticipantAttendance from '../pages/Participant/ParticipantAttendance';
 
 const PageRouter = () => {
   const { authenticated, admin, loading } = useSelector((state) => state.userLogin);
@@ -58,8 +59,8 @@ const PageRouter = () => {
         <Container>
           <Switch>
             {/* Participant */}
-
-            <PrivateRoute path='/' isAuthenticated={authenticated} exact component={ParticipantPanel} />
+            <PrivateRoute path={['/attendance']} isAuthenticated={authenticated} exact component={ParticipantAttendance} />
+            <PrivateRoute path={['/']} isAuthenticated={authenticated} exact component={ParticipantPanel} />
           </Switch>
         </Container>
         <Footer />

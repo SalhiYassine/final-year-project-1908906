@@ -57,3 +57,46 @@ export const attendSessionOnlineParticipant = asyncHandler(async (req, res) => {
         return res.json("Student attendance already recorded.")
     }
 });
+
+export const attendenceGetAllParticipant = asyncHandler(async (req, res) => {
+    const { _id } = req.participant
+    const records = await Attendance.find({ participant: _id })
+    const courses = await Course.find({ participants: _id })
+    let arr = []
+    for (let i = 0; courses.length > i; i++) {
+        const sessions = await Session.find({ course: courses[i]._id })
+        console.log(sessions)
+        for (let j = 0; sessions.length > j; j++) {
+            const attended = await Attendance.findOne({ session: sessions[j]._id, participant: _id }).populate({
+                path: 'session'
+            })
+            console.log(attended)
+            if (new Date() > sessions[j].end_date) {
+
+                if (attended) {
+                    console.log(attended)
+                    const { _id, session, participant, location, expected, createdAt, updatedAt } = attended
+                    arr.push({
+                        session,
+                        location,
+                        expected,
+                        attended: true,
+                    })
+                } else {
+                    arr.push({
+                        session: sessions[j],
+                        location: 'N/A',
+                        expected: true,
+                        attended: false,
+                    })
+                }
+            }
+        }
+    }
+
+    if (arr.length > 0) {
+        res.json(arr)
+    } else {
+        res.json('Records could not be found!')
+    }
+})
