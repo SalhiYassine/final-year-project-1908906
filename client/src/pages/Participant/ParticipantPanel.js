@@ -7,7 +7,7 @@ import { getParticipantSessions } from '../../redux/actions/sessionAction'
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import { Button } from 'react-bootstrap';
-import { getParticipantRecord } from '../../redux/actions/attendanceAction';
+import { getParticipantRecord, createAttendance } from '../../redux/actions/attendanceAction';
 
 
 const ParticipantPanel = () => {
@@ -50,7 +50,7 @@ const ParticipantPanel = () => {
                                 </div>
 
                                 {(s.hybrid === 'Online' || s.hybrid === 'Hybrid') &&
-                                    <Button style={!canBeAttended(s.start_date, s.end_date) ? { backgroundColor: 'rgb(0, 98, 72)' } : {}} disabled={canBeAttended(s.start_date, s.end_date)} variant={!canBeAttended(s.start_date, s.end_date) ? `info` : `outline-dark`} >Attend</Button>
+                                    <Button onClick={() => dispatch(createAttendance(s._id, s.url))} style={!canBeAttended(s.start_date, s.end_date) ? { backgroundColor: 'rgb(0, 98, 72)' } : {}} disabled={canBeAttended(s.start_date, s.end_date)} variant={!canBeAttended(s.start_date, s.end_date) ? `info` : `outline-dark`} >Attend</Button>
 
                                 }
                             </VerticalTimelineElement>

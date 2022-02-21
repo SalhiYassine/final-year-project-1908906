@@ -97,6 +97,6 @@ export const getDetails = (id) => async (dispatch, getState) => {
 
 export const logOut = () => async (dispatch) => {
   await axios.get(`/api/participant/logout`);
-  dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_DETAILS_RESET });
 };

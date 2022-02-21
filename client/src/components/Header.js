@@ -4,6 +4,8 @@ import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector } from 'react-redux';
 import { logOut } from '../redux/actions/userAction';
+import { logOutOrg } from '../redux/actions/organisationAction';
+
 import { useDispatch } from 'react-redux';
 
 const Header = () => {
@@ -14,13 +16,17 @@ const Header = () => {
         dispatch(logOut());
     };
 
+    const orgLogOutHnadler = () => {
+        dispatch(logOutOrg())
+    }
+
     return (
         <header>
             <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
                 <Container>
                     <LinkContainer to='/'>
                         {admin ?
-                            <Navbar.Brand>Admin Panel</Navbar.Brand> :
+                            <Navbar.Brand>Organisation Panel</Navbar.Brand> :
 
                             authenticated ? <Navbar.Brand>Participant Panel</Navbar.Brand> :
                                 <Navbar.Brand>Landing Panel</Navbar.Brand>
@@ -32,19 +38,26 @@ const Header = () => {
 
 
                             {/* User Admin : */}
-                            {admin && (
-                                <>
-                                    <NavDropdown title={'admin'} id='admin' className='me-3'>
-                                        <LinkContainer to='/course/create' as='div'>
-                                            <NavDropdown.Item>Courses</NavDropdown.Item>
-                                        </LinkContainer>
-                                    </NavDropdown>
-                                </>
-                            )}
+
 
                             {/* User Logged In : */}
                             {authenticated && (
                                 <>
+                                    {!admin &&
+                                        <>
+                                            <LinkContainer exact to='/'>
+                                                <Nav.Link>
+                                                    <i className='fas fa-book'></i> Upcoming
+                                                </Nav.Link>
+                                            </LinkContainer>
+
+                                            <LinkContainer to='/attendance'>
+                                                <Nav.Link>
+                                                    <i className='fas fa-history'></i> History
+                                                </Nav.Link>
+                                            </LinkContainer>
+                                        </>
+                                    }
                                     <NavDropdown
                                         className='m-0'
                                         title={userDetails.email}
@@ -53,7 +66,7 @@ const Header = () => {
                                             <NavDropdown.Item>Profile</NavDropdown.Item>
                                         </LinkContainer>
 
-                                        <NavDropdown.Item onClick={logOutHandler}>
+                                        <NavDropdown.Item onClick={!admin ? logOutHandler : orgLogOutHnadler}>
                                             Log Out
                                         </NavDropdown.Item>
                                     </NavDropdown>

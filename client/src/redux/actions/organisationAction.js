@@ -32,7 +32,7 @@ export const loginOrg = (email, password) => async (dispatch) => {
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: data.isAdmin,
+      payload: true,
     });
   } catch (error) {
     dispatch({
@@ -99,8 +99,8 @@ export const getDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-export const logOut = () => async (dispatch) => {
+export const logOutOrg = () => async (dispatch) => {
   await axios.get(`/api/organisation/logout`);
-  dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_DETAILS_RESET });
 };

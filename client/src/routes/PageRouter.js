@@ -29,7 +29,7 @@ import ParticipantAttendance from '../pages/Participant/ParticipantAttendance';
 const PageRouter = () => {
   const { authenticated, admin, loading } = useSelector((state) => state.userLogin);
 
-  if (!loading && admin && authenticated) {
+  if (!loading && authenticated && admin) {
     return (
       <Router>
         <Header />
@@ -41,7 +41,11 @@ const PageRouter = () => {
             <AdminRoute isAuthenticated={authenticated} isAdmin={admin} path='/session/:id/update' component={SessionUpdate} />
             <AdminRoute isAuthenticated={authenticated} isAdmin={admin} path='/course/:id' component={CourseDetails} />
             <AdminRoute isAuthenticated={authenticated} isAdmin={admin} path='/session/:id' component={SessionDetail} />
-            <AdminRoute isAuthenticated={authenticated} isAdmin={admin} exact path={['/', '*']} component={OrganisationPanel} />
+            <PublicRoute path='/organisation/register' isAuthenticated={authenticated} exact component={OrganisationRegister} />
+            <PublicRoute path='/organisation/login' isAuthenticated={authenticated} exact component={OrganisationLogin} />
+            <PublicRoute path='/participant/register' isAuthenticated={authenticated} component={UserRegister} />
+            <PublicRoute path='/participant/login' isAuthenticated={authenticated} component={UserLogin} />
+            <AdminRoute isAuthenticated={authenticated} isAdmin={admin} exact path={['/']} component={OrganisationPanel} />
 
 
             {/* All */}
@@ -61,6 +65,10 @@ const PageRouter = () => {
             {/* Participant */}
             <PrivateRoute path={['/attendance']} isAuthenticated={authenticated} exact component={ParticipantAttendance} />
             <PrivateRoute path={['/']} isAuthenticated={authenticated} exact component={ParticipantPanel} />
+            <PublicRoute path='/organisation/register' isAuthenticated={authenticated} exact component={OrganisationRegister} />
+            <PublicRoute path='/organisation/login' isAuthenticated={authenticated} exact component={OrganisationLogin} />
+            <PublicRoute path='/participant/register' isAuthenticated={authenticated} component={UserRegister} />
+            <PublicRoute path='/participant/login' isAuthenticated={authenticated} component={UserLogin} />
           </Switch>
         </Container>
         <Footer />

@@ -29,8 +29,13 @@ const CourseCreate = () => {
         <>
             {loading ? <Loader /> :
                 error ? <Message variant='danger'>{error}</Message> : courses ?
-                    <>
-                        <div className='w-75 m-auto'>
+                    <div className='mt-3 '>
+                        <div className='w-75 m-auto d-flex flex-column'>
+                            <LinkContainer className='' to={`/course/create`}>
+                                <Button variant='success' className='btn-xl w-25 ms-auto'>
+                                    CREATE
+                                </Button>
+                            </LinkContainer>
                             <h1>Courses</h1>
                             <Table striped bordered hover responsive className='table-sm'>
                                 <thead>
@@ -61,7 +66,7 @@ const CourseCreate = () => {
                                 </tbody>
                             </Table>
                         </div>
-                    </> : <h2>No Courses Available</h2>
+                    </div> : <h2>No Courses Available</h2>
             }
 
         </>

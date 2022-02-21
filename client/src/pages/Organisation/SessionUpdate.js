@@ -85,12 +85,12 @@ const SessionUpdate = ({ match, history }) => {
                 <LinkContainer to={`/`} as='div'>
                     <li className="breadcrumb-item"><a href="#">Home</a></li>
                 </LinkContainer>
-                <LinkContainer to={`/course/${match.params.id}`} as='div'>
+                <LinkContainer to={`/session/${match.params.id}`} as='div'>
                     <li className="breadcrumb-item"><a href="#">Course</a></li>
                 </LinkContainer>
                 <li className="breadcrumb-item active">Session</li>
             </ol>
-            <LinkContainer className='m-4' to={`/course/${match.params.id}`} as='div'>
+            <LinkContainer className='m-4' to={`/session/${match.params.id}`} as='div'>
                 <Button variant='outline-dark'>
                     Back
                 </Button>

@@ -36,7 +36,7 @@ export const attendSessionOnlineParticipant = asyncHandler(async (req, res) => {
                         session: session_id,
                         participant: _id,
                         date_Time: Date.now(),
-                        location: "online",
+                        location: "Online",
                         expected
                     })
                     res.status(200)
@@ -57,6 +57,57 @@ export const attendSessionOnlineParticipant = asyncHandler(async (req, res) => {
         return res.json("Student attendance already recorded.")
     }
 });
+
+
+export const attendSessionOrganisation = asyncHandler(async (req, res) => {
+
+    const { session_id, participant_id } = req.params;
+
+    const duplicate = await Attendance.findOne({ session: session_id, participant: participant_id })
+
+    if (!duplicate) {
+
+        const exists = await Session.findById(session_id);
+        console.log(exists)
+
+        if (exists) {
+            const course = await Course.findById(exists.course)
+            console.log(course)
+            if (course) {
+                const expected = course.participants.includes(participant_id)
+                console.log(expected)
+                if (!exists.guests && !expected) {
+
+                    res.status(403)
+                    return res.json("You are not expected to attend this session and the administrator has not allowed guests.")
+
+                } else {
+                    const newRecord = await Attendance.create({
+                        session: session_id,
+                        participant: participant_id,
+                        date_time: req.body.date_time || Date.now(),
+                        location: req.body.location || "Online",
+                        expected
+                    })
+                    res.status(200)
+                    return res.json({
+                        ...newRecord
+                    })
+                }
+            } else {
+                res.status(404)
+                return res.json("Course does not exist")
+            }
+        } else {
+            res.status(404)
+            return res.json("Session does not exist")
+        }
+    } else {
+        res.status(400)
+        return res.json("Student attendance already recorded.")
+    }
+});
+
 
 export const attendenceGetAllParticipant = asyncHandler(async (req, res) => {
     const { _id } = req.participant
@@ -99,4 +150,32 @@ export const attendenceGetAllParticipant = asyncHandler(async (req, res) => {
     } else {
         res.json('Records could not be found!')
     }
+})
+
+export const attendenceUpdate = asyncHandler(async (req, res) => {
+
+    const { date_time, location, participant } = req.body
+    console.log(req.body)
+    const s = await Attendance.findOne({ session: req.params.session_id, participant: participant })
+    console.log(s)
+    if (s) {
+        s.date_time = new Date(date_time) || s.date_time;
+        s.location = location || s.location;
+        await s.save()
+        res.json(s)
+    } else {
+        res.status(404)
+        throw new Error('Attendance not found!')
+    }
+
+
+})
+
+export const attendenceDelete = asyncHandler(async (req, res) => {
+
+    const { date_time, location, participant } = req.body
+    console.log(req.body)
+    const s = await Attendance.findOneAndDelete({ session: req.params.session_id, participant: participant })
+    res.json('Deleted!')
+
 })
