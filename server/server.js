@@ -33,6 +33,14 @@ app.use('/api/course', courseRoutes);
 app.use('/api/session', sessionRoutes);
 app.use('/api/attendance', attendanceRoutes);
 
+const __dirname = path.resolve();
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/client/build')));
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'))
+  );
+}
+
 // Error Middleware
 app.use(notFound);
 app.use(errorHandler);
